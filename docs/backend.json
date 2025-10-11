@@ -1,0 +1,81 @@
+
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "type": "object",
+      "description": "Represents a user's profile information.",
+      "properties": {
+        "uid": { "type": "string", "description": "The user's unique ID." },
+        "email": { "type": "string", "description": "The user's email." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "photoURL": { "type": "string", "description": "URL of the user's profile picture." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the profile was created." },
+        "referralCode": { "type": "string", "description": "A unique code for referring other users." },
+        "referralCount": { "type": "number", "description": "The number of users referred." },
+        "referrals": { "type": "array", "items": { "type": "string" }, "description": "A list of user IDs that this user has referred." },
+        "subscription": {
+          "type": "object",
+          "description": "User's subscription details.",
+          "properties": {
+            "planName": { "type": "string", "enum": ["Free", "Weekly Sparkle", "Monthly Glow-Up", "Annual Radiance"] },
+            "analysesRemaining": { "type": "number" },
+            "instagramCreditClaimed": { "type": "boolean", "description": "Whether the user has claimed the Instagram follow credit." },
+            "adviceChatsRemaining": { "type": "number", "description": "Number of remaining advice chat interactions." }
+          },
+          "required": ["planName", "analysesRemaining", "instagramCreditClaimed", "adviceChatsRemaining"]
+        }
+      },
+      "required": ["uid", "email", "displayName", "createdAt", "referralCode", "referralCount", "referrals", "subscription"]
+    },
+    "AnalysisResult": {
+      "title": "Analysis Result",
+      "type": "object",
+      "description": "Stores the results of a facial analysis.",
+      "properties": {
+        "userId": { "type": "string", "description": "The ID of the user who owns this analysis." },
+        "faceShape": {
+          "type": "object",
+          "properties": {
+            "shape": { "type": "string" },
+            "description": { "type": "string" }
+          }
+        },
+        "featureRatings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "rating": { "type": "number" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "imageUrls": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "faceShape", "featureRatings", "imageUrls", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "google.com"]
+  },
+  "firestore": {
+    "collections": [
+      {
+        "path": "/users/{userId}",
+        "schema": { "$ref": "#/entities/UserProfile" },
+        "description": "Stores individual user profiles."
+      },
+      {
+        "path": "/users/{userId}/analysisResults/{analysisId}",
+        "schema": { "$ref": "#/entities/AnalysisResult" },
+        "description": "Stores all facial analysis results for a specific user."
+      }
+    ]
+  }
+}

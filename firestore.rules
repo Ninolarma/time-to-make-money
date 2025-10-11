@@ -1,0 +1,98 @@
+/**
+ * @file Firebase Security Rules for the Face-Shape Analyzer App.
+ *
+ * @corePhilosophy This ruleset enforces a strict user-ownership model for user profiles and their analysis results.
+ *   Users can only read and write their own profile data.
+ *
+ * @dataStructure
+ *   - `/users/{userId}`: Stores user profile information.  `userId` must match the authenticated user's UID.
+ *   - `/users/{userId}/analysisResults/{analysisId}`: Stores facial analysis results for a specific user. `userId` must match the authenticated user's UID.
+ *
+ * @keySecurityDecisions
+ *   - Users cannot list all user profiles (listing is denied).
+ *   - All write operations are validated against the authenticated user's UID to prevent data manipulation.
+ *   - Flexible data validation is implemented during this prototyping phase. We are focusing on securing authorization.
+ *
+ * @denormalizationForAuthorization
+ *   - The `AnalysisResult` entity requires a `userId` field that must match the authenticated user's UID. This avoids the need for complex queries to verify ownership.
+ *
+ * @structuralSegregation
+ *   - All user-specific data (profiles and analysis results) is stored under the `/users/{userId}` path, ensuring private access.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Controls access to user profile documents.
+     * @path /users/{userId}
+     * @allow (create) User with UID 'user_abc' can create their own profile if request.auth.uid == 'user_abc'.
+     * @allow (get, update, delete) User with UID 'user_abc' can read, update, and delete their own profile if request.auth.uid == 'user_abc'.
+     * @deny (create) User with UID 'user_xyz' cannot create a profile for 'user_abc'.
+     * @deny (get, update, delete) User with UID 'user_xyz' cannot read, update, or delete the profile for 'user_abc'.
+     * @principle Enforces user-ownership; users can only manage their own profile.
+     */
+    match /users/{userId} {
+      // Helper function to check if the authenticated user is the owner of the document.
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+      // Helper function to check if the authenticated user is the owner of the document and the document exists.
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      // Allow a user to create their own profile.
+      allow create: if isOwner(userId) && request.resource.data.uid == userId;
+
+      // Allow a user to read their own profile.
+      allow get: if isOwner(userId);
+
+      // Allow a user to list user profiles is not permitted.
+      allow list: if false;
+
+      // Allow a user to update their own profile.
+      allow update: if isExistingOwner(userId) && request.resource.data.uid == resource.data.uid;
+
+      // Allow a user to delete their own profile.
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Controls access to analysis result documents within a user's profile.
+     * @path /users/{userId}/analysisResults/{analysisId}
+     * @allow (create) User with UID 'user_abc' can create analysis results under their profile if request.auth.uid == 'user_abc'.
+     * @allow (get, update, delete) User with UID 'user_abc' can read, update, and delete their own analysis results if request.auth.uid == 'user_abc'.
+     * @deny (create) User with UID 'user_xyz' cannot create analysis results for 'user_abc'.
+     * @deny (get, update, delete) User with UID 'user_xyz' cannot read, update, or delete the analysis results for 'user_abc'.
+     * @principle Enforces user-ownership; users can only manage their own analysis results.
+     */
+    match /users/{userId}/analysisResults/{analysisId} {
+      // Helper function to check if the authenticated user is the owner of the analysis result.
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+      // Helper function to check if the authenticated user is the owner of the document and the document exists.
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      // Allow a user to create analysis results under their own profile.
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+
+      // Allow a user to read their own analysis results.
+      allow get: if isOwner(userId);
+
+      // Allow a user to list analysis results under their profile.
+      allow list: if isOwner(userId);
+
+      // Allow a user to update their own analysis results.
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+
+      // Allow a user to delete their own analysis results.
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "Abstract image of a person with stylish clothing in a golden and dark theme.",
+      "imageUrl": "/images/hero-1.jpg",
+      "imageHint": "fashion style"
+    },
+    {
+      "id": "hero-2",
+      "description": "A stylish woman in a black outfit posing against a dark background, embodying a chic and modern aesthetic.",
+      "imageUrl": "/images/hero-2.jpg",
+      "imageHint": "stylish woman"
+    },
+    {
+      "id": "gallery-female-1",
+      "description": "Stylish woman in a hat.",
+      "imageUrl": "/images/gallery-female-1.jpg",
+      "imageHint": "stylish woman hat"
+    },
+    {
+      "id": "gallery-female-2",
+      "description": "Woman with a modern haircut.",
+      "imageUrl": "/images/gallery-female-2.jpg",
+      "imageHint": "modern haircut"
+    },
+    {
+      "id": "gallery-female-3",
+      "description": "Woman in a vibrant street style outfit.",
+      "imageUrl": "/images/gallery-female-3.jpg",
+      "imageHint": "street style"
+    },
+    {
+      "id": "gallery-female-4",
+      "description": "Close-up of a person with elegant makeup.",
+      "imageUrl": "/images/gallery-female-4.jpg",
+      "imageHint": "elegant makeup"
+    },
+    {
+      "id": "gallery-male-1",
+      "description": "Stylish man in a modern outfit.",
+      "imageUrl": "/images/gallery-male-1.jpg",
+      "imageHint": "stylish man"
+    },
+    {
+      "id": "gallery-male-2",
+      "description": "Man with a classic hairstyle.",
+      "imageUrl": "/images/gallery-male-2.jpg",
+      "imageHint": "classic hairstyle"
+    },
+    {
+      "id": "gallery-male-3",
+      "description": "Man in a sharp suit.",
+      "imageUrl": "/images/gallery-male-3.jpg",
+      "imageHint": "man suit"
+    },
+    {
+      "id": "gallery-male-4",
+      "description": "Close-up of a man with a well-groomed beard.",
+      "imageUrl": "/images/gallery-male-4.jpg",
+      "imageHint": "man beard"
+    },
+    {
+      "id": "analysis-history-1",
+      "description": "Man looking thoughtfully out a window.",
+      "imageUrl": "/images/analysis-history-1.jpg",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "analysis-history-2",
+      "description": "Woman with sunglasses in a city.",
+      "imageUrl": "/images/analysis-history-2.jpg",
+      "imageHint": "woman city"
+    },
+    {
+      "id": "analysis-history-3",
+      "description": "Man in a coffee shop.",
+      "imageUrl": "/images/analysis-history-3.jpg",
+      "imageHint": "man coffee"
+    },
+    {
+      "id": "tool-face-analysis",
+      "description": "Close-up of a person's face showing detailed features for analysis.",
+      "imageUrl": "/images/tool-face-analysis.jpg",
+      "imageHint": "face closeup"
+    },
+    {
+      "id": "tool-color-matching",
+      "description": "A vibrant palette of colors being mixed, representing color matching.",
+      "imageUrl": "/images/tool-color-matching.jpg",
+      "imageHint": "color palette"
+    },
+    {
+      "id": "tool-occasion-stylist",
+      "description": "A person elegantly dressed for a special occasion.",
+      "imageUrl": "/images/tool-occasion-stylist.jpg",
+      "imageHint": "elegant fashion"
+    },
+    {
+      "id": "tool-hairstyle-simulator",
+      "description": "A woman with a unique and stylish haircut.",
+      "imageUrl": "/images/tool-hairstyle-simulator.jpg",
+      "imageHint": "stylish haircut"
+    },
+    {
+      "id": "tool-clothing-analyzer",
+      "description": "A collection of different clothing items neatly arranged.",
+      "imageUrl": "/images/tool-clothing-analyzer.jpg",
+      "imageHint": "clothing collection"
+    }
+  ]
+}
